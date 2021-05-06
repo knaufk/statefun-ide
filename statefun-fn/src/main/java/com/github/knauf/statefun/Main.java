@@ -19,24 +19,25 @@
 package com.github.knauf.statefun;
 
 import io.undertow.Undertow;
-import org.apache.flink.statefun.sdk.java.StatefulFunctionSpec;
 import org.apache.flink.statefun.sdk.java.StatefulFunctions;
-import org.apache.flink.statefun.sdk.java.TypeName;
-import org.apache.flink.statefun.sdk.java.ValueSpec;
 import org.apache.flink.statefun.sdk.java.handler.RequestReplyHandler;
 
 public final class Main {
 
-  public static void main(String[] args) {
-    final StatefulFunctions functions = new StatefulFunctions();
-    functions.withStatefulFunction(StatefulFunctionSpec.builder(TypeName.typeNameFromString("greeter.fns/demo")).withSupplier(DemoFn::new).build());
+    public static void main(String[] args) {
+        StatefulFunctions functions = new StatefulFunctions();
+        // here is the place to define any functions served with this endpoint.
+        // in this demo, we are only serving a single function:
+        functions.withStatefulFunction(DemoFn.SPEC);
 
-    final RequestReplyHandler requestReplyHandler = functions.requestReplyHandler();
-    final Undertow httpServer =
-        Undertow.builder()
-            .addHttpListener(1108, "0.0.0.0")
-            .setHandler(new UndertowHttpHandler(requestReplyHandler))
-            .build();
-    httpServer.start();
-  }
+        // The following section is a boilerplate to serve this endpoint.
+        // This example uses the Undertow HTTP server, but any other HTTP server (Jetty, Tomcat, Netty, etc') will do:
+        final RequestReplyHandler requestReplyHandler = functions.requestReplyHandler();
+        final Undertow httpServer =
+                Undertow.builder()
+                        .addHttpListener(1108, "0.0.0.0")
+                        .setHandler(new UndertowHttpHandler(requestReplyHandler))
+                        .build();
+        httpServer.start();
+    }
 }

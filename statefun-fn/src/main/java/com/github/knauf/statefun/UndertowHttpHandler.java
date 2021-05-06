@@ -44,6 +44,7 @@ public final class UndertowHttpHandler implements HttpHandler {
     exchange.getRequestReceiver().receiveFullBytes(this::onRequestBody);
   }
 
+  @SuppressWarnings("deprecation")
   private void onRequestBody(HttpServerExchange exchange, byte[] requestBytes) {
     exchange.dispatch();
     CompletableFuture<Slice> future = handler.handle(Slices.wrap(requestBytes));
