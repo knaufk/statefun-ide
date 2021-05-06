@@ -4,9 +4,12 @@ import com.google.protobuf.Message;
 import com.google.protobuf.MoreByteStrings;
 import com.google.protobuf.StringValue;
 import org.apache.flink.statefun.flink.common.json.NamespaceNamePair;
+import org.apache.flink.statefun.flink.harness.io.SerializableSupplier;
 import org.apache.flink.statefun.flink.io.generated.AutoRoutable;
 import org.apache.flink.statefun.flink.io.generated.RoutingConfig;
 import org.apache.flink.statefun.flink.io.generated.TargetFunctionType;
+
+import java.util.List;
 
 final class Utils {
 
@@ -45,5 +48,23 @@ final class Utils {
         }
 
 
+    }
+
+    public static final class CyclingInMemoryIngress implements SerializableSupplier<Message> {
+
+        private final List<Message> items;
+        private int index;
+
+        public CyclingInMemoryIngress(List<Message> items) {
+            this.items = items;
+            this.index = 0;
+        }
+
+        @Override
+        public Message get() {
+            sleepALittle();
+            this.index = (this.index + 1) % items.size();
+            return items.get(index);
+        }
     }
 }
