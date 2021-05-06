@@ -9,6 +9,6 @@ public class HarnessModule implements StatefulFunctionModule {
 
     @Override
     public void configure(Map<String, String> map, Binder binder) {
-        binder.bindIngressRouter(Main.IN_MEMORY_INGRESS, new AutoRoutableProtobufRouter());
+        binder.bindIngressRouter(Main.IN_MEMORY_TEST_INGRESS, new AutoRoutableProtobufRouter());
     }
 }

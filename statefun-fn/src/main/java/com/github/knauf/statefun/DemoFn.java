@@ -16,8 +16,8 @@ public class DemoFn implements StatefulFunction {
             .build();
 
     @Override
-    public CompletableFuture<Void> apply(Context context, Message message) throws Throwable {
-        System.out.println("Hello: " + message.asUtf8String());
+    public CompletableFuture<Void> apply(Context context, Message message) {
+        System.out.println("Hello from " + context.self().id() + ", I've received a message: " + message.asUtf8String());
         return context.done();
     }
 }

@@ -18,9 +18,7 @@
 
 package com.github.knauf.statefun;
 
-import io.undertow.Undertow;
 import org.apache.flink.statefun.sdk.java.StatefulFunctions;
-import org.apache.flink.statefun.sdk.java.handler.RequestReplyHandler;
 
 public final class Main {
 
@@ -30,14 +28,6 @@ public final class Main {
         // in this demo, we are only serving a single function:
         functions.withStatefulFunction(DemoFn.SPEC);
 
-        // The following section is a boilerplate to serve this endpoint.
-        // This example uses the Undertow HTTP server, but any other HTTP server (Jetty, Tomcat, Netty, etc') will do:
-        final RequestReplyHandler requestReplyHandler = functions.requestReplyHandler();
-        final Undertow httpServer =
-                Undertow.builder()
-                        .addHttpListener(1108, "0.0.0.0")
-                        .setHandler(new UndertowHttpHandler(requestReplyHandler))
-                        .build();
-        httpServer.start();
+        HttpServer.serve(1018, functions);
     }
 }
