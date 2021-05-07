@@ -9,11 +9,11 @@ The project has two sub-modules:
 
 ## Run
 
-1. Run[`Main`](src/main/java/com/github/knauf/statefun/Main.java) in `statefun-fn`. This serves the `DemoFn` locally. 
-2. Run [`Main`](src/main/java/com/github/knaufk/statefunharness/Main.java) in `statefun-harnness`. This starts the Statefun Cluster. 
+1. Run[`Main`](statefun-fn/src/main/java/com/github/knauf/statefun/Main.java) in `statefun-fn`. This serves the `DemoFn` locally. 
+2. Run [`Main`](statefun-harness/src/main/java/com/github/knaufk/statefunharness/Main.java) in `statefun-harnness`. This starts the Statefun Cluster. 
 
 ## About the Module
 
-The [module.yaml]([src/main/resources/module.yaml) define the endpoint of the `DemoFn`, a Kakfa Ingress and a Kafka Egress. 
+The [module.yaml](statefun-harness/src/main/resources/module.yaml) define the endpoint of the `DemoFn`, a Kafka Ingress and a Kafka Egress. 
 Every message from the ingress is routed to the `DemoFn`, which in turn routes it to the Egress. 
-In the [harness](src/main/java/com/github/knaufk/statefunharness/Main.java) the Kafka Ingress and Egress are "mocked" with a `CyclingInMemoryIngress` and a `PrintingEgress`. 
+In the [harness](statefun-harness/src/main/java/com/github/knaufk/statefunharness/Main.java) the Kafka Ingress and Egress are "mocked" with a `CyclingInMemoryIngress` and a `PrintingEgress`. 
