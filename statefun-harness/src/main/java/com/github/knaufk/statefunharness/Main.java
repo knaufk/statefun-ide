@@ -19,7 +19,8 @@ public class Main {
         );
 
         new Harness()
-                .withSupplyingIngress(HelperModule.IN_MEMORY_TEST_INGRESS, new CyclingInMemoryIngress(inputMessages))
+                .withSupplyingIngress(Constants.IN_MEMORY_TEST_INGRESS, new CyclingInMemoryIngress(inputMessages))
+                .withPrintingEgress(Constants.IN_MEMORY_TEST_EGRESS)
                 .start();
     }
 }
